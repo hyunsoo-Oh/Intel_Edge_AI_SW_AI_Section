@@ -321,3 +321,4 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,pycharm,venv*.h5
 *.h5
+*.h5
