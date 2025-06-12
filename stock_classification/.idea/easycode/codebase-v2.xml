@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/01_crawling_company.py;D:/111/Intel_0212/stock_classification/01_crawling_company_news.py;D:/111/Intel_0212/stock_classification/01_crawling_news.py;D:/111/Intel_0212/stock_classification/02_concat_data.py;D:/111/Intel_0212/stock_classification/03_preprocessing.py;D:/111/Intel_0212/stock_classification/04_model_learning.py;D:/111/Intel_0212/stock_classification/05_predict.py;D:/111/Intel_0212/stock_classification/test.py" />
+  </component>
+</project>
