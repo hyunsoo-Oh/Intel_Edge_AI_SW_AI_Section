@@ -1,0 +1,93 @@
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.enum.text import PP_ALIGN
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# 1. 슬라이드 생성 함수
+def add_slide(prs, title, content, bullet=False):
+    slide_layout = prs.slide_layouts[1]  # 제목+내용
+    slide = prs.slides.add_slide(slide_layout)
+    slide.shapes.title.text = title
+    body = slide.placeholders[1]
+    tf = body.text_frame
+    tf.clear()
+    if bullet:
+        for line in content:
+            p = tf.add_paragraph()
+            p.text = line
+            p.level = 0
+    else:
+        tf.text = content
+    for p in tf.paragraphs:
+        p.font.size = Pt(18)
+        p.alignment = PP_ALIGN.LEFT
+
+# 2. 발표 자료 내용 정의
+slides = [
+    {"title": "프로젝트 개요", "content": "뉴스 기사와 기업 정보를 활용한 섹터(산업군) 분류 모델 개발"},
+    {"title": "전체 파이프라인", "content": ["데이터 크롤링", "데이터 통합", "데이터 전처리", "모델 학습", "예측 및 평가"], "bullet": True},
+    {"title": "데이터 크롤링", "content": "Selenium으로 Yahoo Finance에서 섹터별 기업/뉴스 크롤링"},
+    {"title": "데이터 통합", "content": "여러 CSV 파일을 하나로 합침 (pandas 활용)"},
+    {"title": "데이터 전처리", "content": "텍스트 정제, 토큰화, 패딩, 라벨 인코딩"},
+    {"title": "모델 학습", "content": "임베딩, Conv1D, LSTM, Dense 등 딥러닝 모델"},
+    {"title": "시각화 예시", "content": "정확도/손실 그래프, 예측 결과 비교 표"},
+    {"title": "예측 및 평가", "content": "저장된 모델로 예측, 실제값과 비교"},
+    {"title": "결론 및 기대효과", "content": "자동 분석 및 금융 데이터 분석 활용"},
+]
+
+# 3. PPTX 생성
+prs = Presentation()
+for slide in slides:
+    add_slide(prs, slide["title"], slide["content"], bullet=slide.get("bullet", False))
+
+# 4. 시각화 이미지 추가 (예시: 정확도/손실 그래프)
+def add_image_slide(prs, title, img_path):
+    slide_layout = prs.slide_layouts[5]  # 제목만
+    slide = prs.slides.add_slide(slide_layout)
+    slide.shapes.title.text = title
+    left = Inches(1)
+    top = Inches(1.5)
+    slide.shapes.add_picture(img_path, left, top, width=Inches(7))
+
+# 예시 그래프 생성
+def plot_accuracy_loss():
+    acc = [0.6, 0.7, 0.8, 0.85, 0.88, 0.89, 0.90, 0.91, 0.91, 0.92]
+    val_acc = [0.58, 0.68, 0.78, 0.82, 0.85, 0.87, 0.89, 0.89, 0.90, 0.91]
+    loss = [1.2, 0.9, 0.7, 0.55, 0.45, 0.4, 0.38, 0.35, 0.33, 0.3]
+    val_loss = [1.3, 1.0, 0.8, 0.6, 0.5, 0.45, 0.42, 0.4, 0.38, 0.35]
+    plt.figure(figsize=(10,4))
+    plt.subplot(1,2,1)
+    plt.plot(acc, label='accuracy')
+    plt.plot(val_acc, label='val_accuracy')
+    plt.legend(); plt.title('Accuracy')
+    plt.subplot(1,2,2)
+    plt.plot(loss, label='loss')
+    plt.plot(val_loss, label='val_loss')
+    plt.legend(); plt.title('Loss')
+    plt.tight_layout()
+    plt.savefig('accuracy_loss.png')
+    plt.close()
+
+plot_accuracy_loss()
+add_image_slide(prs, "정확도/손실 그래프", "accuracy_loss.png")
+
+# 5. 예측 결과 표 이미지 추가
+def plot_prediction_table():
+    df = pd.DataFrame({
+        '실제': ['Tech', 'Finance', 'Utilities', 'Tech', 'Finance'],
+        '예측1': ['Tech', 'Finance', 'Tech', 'Tech', 'Finance'],
+        '예측2': ['Finance', 'Utilities', 'Utilities', 'Finance', 'Tech']
+    })
+    fig, ax = plt.subplots(figsize=(5,1.5))
+    ax.axis('tight'); ax.axis('off')
+    table = ax.table(cellText=df.values, colLabels=df.columns, loc='center')
+    plt.savefig('prediction_table.png', bbox_inches='tight')
+    plt.close()
+
+plot_prediction_table()
+add_image_slide(prs, "예측 결과 비교 표", "prediction_table.png")
+
+# 6. 저장
+prs.save("stock_classification_presentation.pptx")
+print("PPT 파일이 생성되었습니다: stock_classification_presentation.pptx")

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* 전체 윈도우 및 배경 */
+QWidget {
+    background-color: #121212;
+    color: #FFFFFF;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+
+/* QPushButton (재생, 일시정지 등) */
+QPushButton {
+    background-color: transparent;
+    border: none;
+    color: #FFFFFF;
+    padding: 8px 12px;
+}
+QPushButton:hover {
+    background-color: #1DB954;
+    color: black;
+    border-radius: 5px;
+}
+
+/* QListWidget (재생목록) */
+QListWidget {
+    background-color: #181818;
+    border: none;
+    padding: 8px;
+}
+QListWidget::item {
+    padding: 10px;
+}
+QListWidget::item:selected {
+    background-color: #1DB954;
+    color: black;
+    border-radius: 4px;
+}
+
+/* QTableWidget (곡 목록) */
+QTableWidget {
+    background-color: #181818;
+    border: none;
+    color: #FFFFFF;
+    gridline-color: #2a2a2a;
+}
+QHeaderView::section {
+    background-color: #282828;
+    color: #B3B3B3;
+    padding: 5px;
+    border: none;
+}
+
+/* QLineEdit (검색창 등) */
+QLineEdit {
+    background-color: #282828;
+    color: #FFFFFF;
+    border: 1px solid #3E3E3E;
+    border-radius: 4px;
+    padding: 6px;
+}
+QLineEdit:focus {
+    border: 1px solid #1DB954;
+}
+
+/* QSlider (재생 위치, 음량 조절) */
+QSlider::groove:horizontal {
+    background: #404040;
+    height: 4px;
+    border-radius: 2px;
+}
+QSlider::handle:horizontal {
+    background: #1DB954;
+    border: none;
+    width: 12px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 6px;
+}
+QSlider::sub-page:horizontal {
+    background: #1DB954;
+}
+
+/* QLabel (타이틀, 시간 등) */
+QLabel {
+    color: #FFFFFF;
+}
+
+/* ScrollBar (스크롤 있는 위젯에 필요) */
+QScrollBar:vertical {
+    background: #181818;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle:vertical {
+    background: #3E3E3E;
+    min-height: 20px;
+    border-radius: 5px;
+}
+QScrollBar::handle:vertical:hover {
+    background: #1DB954;
+}
+
+/* Hover 효과 강조용 클래스로 활용 가능 */
+.play-hover:hover {
+    background-color: #1DB954;
+    color: black;
+}
+
+
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="searchEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchBtn">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../resources/icons/search_icon.svg</normaloff>../resources/icons/search_icon.svg</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QListView" name="listView"/>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
